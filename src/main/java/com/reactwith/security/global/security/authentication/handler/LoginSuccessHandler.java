@@ -1,8 +1,9 @@
-package com.reactwith.security.global.security.authentication;
+package com.reactwith.security.global.security.authentication.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.reactwith.security.domain.user.dto.UserToken;
+import com.reactwith.security.global.security.authentication.jwt.JwtUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,8 +25,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         Gson gson = new Gson();
         Map<String, Object> claims = token.getClaims();
-        claims.put("accessToken", "");
-        claims.put("refreshToken", "");
+        String accessToken = JwtUtils.generateToken(claims, 60);
+        String refreshToken = JwtUtils.generateToken(claims, 60*24*7);
+        claims.put("accessToken", accessToken);
+        claims.put("refreshToken", refreshToken);
 
         response.setContentType("application/json; charset=UTF-8");
 

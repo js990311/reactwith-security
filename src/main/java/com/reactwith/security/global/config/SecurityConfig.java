@@ -1,7 +1,8 @@
 package com.reactwith.security.global.config;
 
-import com.reactwith.security.global.security.authentication.LoginFailHandler;
-import com.reactwith.security.global.security.authentication.LoginSuccessHandler;
+import com.reactwith.security.global.security.authentication.filter.JwtAuthenticationFilter;
+import com.reactwith.security.global.security.authentication.handler.LoginFailHandler;
+import com.reactwith.security.global.security.authentication.handler.LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -33,7 +35,13 @@ public class SecurityConfig {
                         .successHandler(loginSuccessHandler())
                         .failureHandler(loginFailHandler())
         );
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter(){
+        return new JwtAuthenticationFilter();
     }
 
     @Bean

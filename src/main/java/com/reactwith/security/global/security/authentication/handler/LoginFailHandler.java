@@ -1,4 +1,4 @@
-package com.reactwith.security.global.security.authentication;
+package com.reactwith.security.global.security.authentication.handler;
 
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
