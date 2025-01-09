@@ -1,6 +1,7 @@
 package com.reactwith.security.global.config;
 
-import com.reactwith.security.global.security.LoginSuccessHandler;
+import com.reactwith.security.global.security.authentication.LoginFailHandler;
+import com.reactwith.security.global.security.authentication.LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -29,8 +31,14 @@ public class SecurityConfig {
                 config->config
                         .loginPage("/login")
                         .successHandler(loginSuccessHandler())
+                        .failureHandler(loginFailHandler())
         );
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationFailureHandler loginFailHandler() {
+        return new LoginFailHandler();
     }
 
     @Bean

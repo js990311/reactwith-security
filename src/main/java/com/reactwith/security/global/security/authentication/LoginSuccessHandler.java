@@ -1,4 +1,4 @@
-package com.reactwith.security.global.security;
+package com.reactwith.security.global.security.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -28,6 +28,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         claims.put("refreshToken", "");
 
         response.setContentType("application/json; charset=UTF-8");
+
         PrintWriter printWriter = response.getWriter();
         printWriter.println(gson.toJson(claims));
         printWriter.close();
