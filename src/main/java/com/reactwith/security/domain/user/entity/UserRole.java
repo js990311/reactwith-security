@@ -4,12 +4,14 @@ import com.reactwith.security.domain.role.entity.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
+@Getter
 @Table(name = "user_role_id")
 public class UserRole {
     @Id
