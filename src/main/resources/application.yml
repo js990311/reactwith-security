@@ -16,3 +16,4 @@ spring:
 logging:
   level:
     org.springframework.security.web: debug
+    com.reactwith.security: debug

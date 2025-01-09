@@ -9,7 +9,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserToken extends User {
     private String email;
@@ -17,6 +19,15 @@ public class UserToken extends User {
     private String nickname;
     private String social;
     private List<String> roles;
+
+    public Map<String, Object> getClaims(){
+        HashMap<String, Object> claims = new HashMap<>();
+        claims.put("id", email);
+        claims.put("nickname", nickname);
+        claims.put("social", social);
+        claims.put("roles", roles);
+        return claims;
+    }
 
     public UserToken(String email, String password, String nickname, String social, List<String> roles) {
         super(email, password, roles.stream().map(role->new SimpleGrantedAuthority("ROLE_"+role)).toList());

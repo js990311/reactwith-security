@@ -33,6 +33,10 @@ dependencies {
 
 	testCompileOnly 'org.projectlombok:lombok:1.18.36'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
+
+	// for json
+	implementation 'com.google.code.gson:gson:2.11.0'
+
 }
 
 tasks.named('test') {
