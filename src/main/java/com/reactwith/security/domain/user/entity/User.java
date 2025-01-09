@@ -30,7 +30,12 @@ public class User {
 
     private String social;
 
-    @OneToMany
+    @Builder.Default
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRole> userRoles = new ArrayList<>();
+
+    public void addUserRole(UserRole userRole){
+        this.userRoles.add(userRole);
+    }
 
 }

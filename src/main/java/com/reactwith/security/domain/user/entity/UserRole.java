@@ -26,6 +26,6 @@ public class UserRole {
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
 
-    @Column(name = "role_id", updatable = false, insertable = false)
-    private Long roleId;
+    @Column(name = "role_name", updatable = false, insertable = false)
+    private String roleName;
 }
