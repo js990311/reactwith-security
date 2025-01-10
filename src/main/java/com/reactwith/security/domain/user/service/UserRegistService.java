@@ -31,6 +31,7 @@ public class UserRegistService {
         User user = User.builder()
                 .email(email)
                 .password(encodedPassword)
+                .social("local")
                 .nickname(email)
                 .build();
         UserRole userRole = UserRole.builder()

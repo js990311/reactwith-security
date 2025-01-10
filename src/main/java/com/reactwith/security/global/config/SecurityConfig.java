@@ -1,6 +1,7 @@
 package com.reactwith.security.global.config;
 
 import com.reactwith.security.global.security.authentication.filter.JwtAuthenticationFilter;
+import com.reactwith.security.global.security.authentication.handler.CustomAccessDeniedHandler;
 import com.reactwith.security.global.security.authentication.handler.LoginFailHandler;
 import com.reactwith.security.global.security.authentication.handler.LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -36,9 +38,16 @@ public class SecurityConfig {
                         .failureHandler(loginFailHandler())
         );
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.exceptionHandling(
+                config->config.accessDeniedHandler(accessDeniedHandler())
+        );
         return http.build();
     }
 
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
+    }
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter(){
         return new JwtAuthenticationFilter();
