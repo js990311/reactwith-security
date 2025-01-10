@@ -1,5 +1,6 @@
 package com.reactwith.security.domain.user.controller;
 
+import com.reactwith.security.domain.user.entity.SocialType;
 import com.reactwith.security.domain.user.form.UserRegistForm;
 import com.reactwith.security.domain.user.service.UserRegistService;
 import com.reactwith.security.global.security.authentication.jwt.JwtUtils;
@@ -19,8 +20,7 @@ public class UserController {
     public Map<String, Object> postUserReigst(
             @RequestBody UserRegistForm form
     ){
-        userRegistService.registUser(form.getEmail(), form.getPassword());
-        return Map.of("status", "login success");
+        return userRegistService.registUser(form.getEmail(), form.getPassword(), SocialType.Local);
     }
 
     @PostMapping("/refresh")

@@ -31,6 +31,13 @@ public class SecurityConfig {
         http.cors(config->config.configurationSource(corsConfigurationSource()));
         http.csrf(config->config.disable());
         http.sessionManagement(config->config.sessionCreationPolicy(SessionCreationPolicy.NEVER));
+        http.authorizeHttpRequests(
+                config->config
+                        .requestMatchers("/error").permitAll()
+                        .requestMatchers("/user/regist").permitAll()
+                        .requestMatchers("/user/refresh").hasRole("refresh")
+                        .anyRequest().authenticated()
+        );
         http.formLogin(
                 config->config
                         .loginPage("/login")
