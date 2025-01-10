@@ -35,7 +35,7 @@ public class SecurityConfig {
                 config->config
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/user/regist").permitAll()
-                        .requestMatchers("/user/refresh").hasRole("refresh")
+                        .requestMatchers("/user/refresh").hasRole("REFRESH")
                         .anyRequest().authenticated()
         );
         http.formLogin(

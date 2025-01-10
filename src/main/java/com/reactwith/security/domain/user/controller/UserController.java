@@ -35,7 +35,9 @@ public class UserController {
         }
         String token = authorization.substring(7);
         Map<String, Object> claims = JwtUtils.validateToken(token);
+        claims.put("refresh", false);
         String accessToken = JwtUtils.generateToken(claims, 60);
+        claims.put("refresh", true);
         String refreshToken = JwtUtils.generateToken(claims, 24*60*7);
         claims.put("accessToken", accessToken);
         claims.put("refreshToken", refreshToken);

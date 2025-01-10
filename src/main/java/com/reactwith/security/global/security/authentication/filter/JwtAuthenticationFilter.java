@@ -45,10 +45,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         String token = authorization.substring(7);
         Map<String, Object> claims = JwtUtils.validateToken(token);
-        List<String> roles = (List<String>) claims.get("roles");
-        
+        Boolean isRefresh = (Boolean) claims.get("refresh");
+        List<String> roles;
+        if(isRefresh){
+            roles = List.of("REFRESH");
+        }else {
+            roles = (List<String>) claims.get("roles");
+        }
+
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-            claims, null, roles.stream().map(role->new SimpleGrantedAuthority(role)).toList()
+            claims, null, roles.stream().map(role->new SimpleGrantedAuthority("ROLE_" + role)).toList()
         );
 
         SecurityContext context = new SecurityContextImpl(authentication);

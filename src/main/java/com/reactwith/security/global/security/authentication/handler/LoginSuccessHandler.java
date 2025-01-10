@@ -25,7 +25,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         Gson gson = new Gson();
         Map<String, Object> claims = token.getClaims();
+        claims.put("refresh", false);
         String accessToken = JwtUtils.generateToken(claims, 60);
+        claims.put("refresh", true);
         String refreshToken = JwtUtils.generateToken(claims, 60*24*7);
         claims.put("accessToken", accessToken);
         claims.put("refreshToken", refreshToken);
